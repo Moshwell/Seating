@@ -18,4 +18,4 @@ Project is created with:
 * Feature 4 : Read only for all / Administration for a panel of users. (incoming)
 	
 ## Setup
-To run this project, install it locally then run it into Eclispe.
+To run this project, install it locally then run it into Eclispe. You also need a special file to connect. To get it contact us.
