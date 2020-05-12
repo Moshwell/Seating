@@ -14,11 +14,19 @@ public class Main {
             public void run() {
                 JPanel panel = new JPanel(new GridBagLayout());
                 JComboBox<?> sallesComboBox = new JComboBox<Object>(Controller.getAllSallesNames().toArray()); 
-                JOptionPane.showMessageDialog(null, sallesComboBox, "Choix de la salle à afficher", JOptionPane.QUESTION_MESSAGE);
-                panel.add(sallesComboBox);
-				int cols = Controller.getColsFromSalle(sallesComboBox.getSelectedItem().toString());
-				int rows = Controller.getRowsFromSalle(sallesComboBox.getSelectedItem().toString());
-				new MainWindow(cols, rows);
+                int result = JOptionPane.showConfirmDialog(null, sallesComboBox, "Choix de la salle à afficher", JOptionPane.YES_NO_OPTION);
+                
+                if(result != JOptionPane.YES_OPTION)
+                {
+                	System.exit(0);
+                }
+                else
+                {
+                	panel.add(sallesComboBox);
+                	int cols = Controller.getColsFromSalle(sallesComboBox.getSelectedItem().toString());
+                	int rows = Controller.getRowsFromSalle(sallesComboBox.getSelectedItem().toString());
+                	new MainWindow(cols, rows);
+                }
             }
         });
     }
