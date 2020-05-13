@@ -1,8 +1,11 @@
 package main;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -10,7 +13,7 @@ public class MainWindow {
 	
     final JFrame frame = new JFrame("Placement des utilisateurs");
 	
-    public MainWindow(int columns, int rows) 
+    public MainWindow(int columns, int rows) throws IOException 
     {
     	JButton addCollaborator = new JButton();
     	JButton deleteCollaborator = new JButton();
@@ -19,7 +22,6 @@ public class MainWindow {
     	JPanel panelOptions = new JPanel();
         Object[] Personnes = Controller.getAllNomPrenom().toArray();
         JComboBox<?> NomPrenom = new JComboBox<Object>(Personnes);
-        NomPrenom.removeItemAt(0);
     	panelOptions.setBounds(new Rectangle(100, 70, 100, 50));
     	
     	addNom.setBounds(10, 500, 200, 25);
@@ -71,11 +73,45 @@ public class MainWindow {
             }
         };
         frame.addWindowListener(exitListener);
+        
+        addCollaborator.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (addNom.getText() != null && addNom.getText() != "" || addPrenom.getText() != null && addPrenom.getText() != "") {
+					try {
+						Controller.createPerson(addNom.getText(), addPrenom.getText());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+        });
+        
+        deleteCollaborator.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (NomPrenom != null) {
+					try {
+						String value = NomPrenom.getSelectedItem().toString();
+						Controller.deletePerson(value);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+        });
     }
     
     private void close()
     {
+    	SwingUtilities.updateComponentTreeUI(frame);
     	frame.dispose();
     	Main.main(null);
     }
+    
 }

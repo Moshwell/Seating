@@ -12,34 +12,33 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 public class RoomController {
 
     @Autowired
     RoomRepository roomRepository;
 
-    @GetMapping("/rooms")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/rooms")
     public List<Room> getAllrooms() {
         return roomRepository.findAll();
     }
 
-    @PostMapping("/rooms")
+    @RequestMapping(method = RequestMethod.POST, value = "/api/rooms")
     public Room createRoom(@Valid @RequestBody Room room) {
         return roomRepository.save(room);
     }
 
-    @GetMapping("/rooms/{id}")
-    public Room getRoomById(@PathVariable(value = "id") Integer roomId) {
-        return roomRepository.findById(roomId)
-                .orElseThrow(() -> new ResourceNotFoundException("room", "id", roomId));
+    @RequestMapping(method = RequestMethod.GET, value = "/api/roomsPerId/{id}")
+    public Room getRoomById(@PathVariable Integer id) {
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("room", "id", id));
     }
 
-    @PutMapping("/rooms/{id}")
-    public Room updateRoom(@PathVariable(value = "id") Integer roomId,
+    @RequestMapping(method = RequestMethod.PUT, value = "/api/rooms/{id}")
+    public Room updateRoom(@PathVariable Integer id,
                                            @Valid @RequestBody Room roomDetails) {
 
-    	Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new ResourceNotFoundException("room", "id", roomId));
+    	Room room = roomRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("room", "id", id));
 
         room.setRoomName(roomDetails.getRoomName());
         room.setCols(roomDetails.getCols());
@@ -49,10 +48,10 @@ public class RoomController {
         return updatedroom;
     }
 
-    @DeleteMapping("/rooms/{id}")
-    public ResponseEntity<?> deleteroom(@PathVariable(value = "id") Integer roomId) {
-    	Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new ResourceNotFoundException("room", "id", roomId));
+    @RequestMapping(method = RequestMethod.DELETE, value = "/api/rooms/{id}")
+    public ResponseEntity<?> deleteroom(@PathVariable Integer id) {
+    	Room room = roomRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("room", "id", id));
 
         roomRepository.delete(room);
 

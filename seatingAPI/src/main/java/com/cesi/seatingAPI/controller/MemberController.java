@@ -12,34 +12,34 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 public class MemberController {
 
     @Autowired
     MemberRepository memberRepository;
 
-    @GetMapping("/members")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/members")
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }
 
-    @PostMapping("/members")
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/api/members")
     public Member createMember(@Valid @RequestBody Member member) {
         return memberRepository.save(member);
     }
-
-    @GetMapping("/members/{id}")
-    public Member getMemberById(@PathVariable(value = "id") Integer memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(() -> new ResourceNotFoundException("room", "id", memberId));
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/api/idPerMember/{id}")
+    public Member getIdPerMember(@PathVariable Integer id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("member", "id", id));
     }
 
-    @PutMapping("/members/{id}")
-    public Member updateMember(@PathVariable(value = "id") Integer memberId,
+    @RequestMapping(method = RequestMethod.PUT, value = "/api/members/{id}")
+    public Member updateMember(@PathVariable Integer id,
                                            @Valid @RequestBody Member memberDetails) {
 
-    	Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new ResourceNotFoundException("room", "id", memberId));
+    	Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("member", "id", id));
 
     	member.setName(memberDetails.getName());
     	member.setSurname(memberDetails.getSurname());
@@ -48,10 +48,10 @@ public class MemberController {
         return updatedroom;
     }
 
-    @DeleteMapping("/members/{id}")
-    public ResponseEntity<?> deleteroom(@PathVariable(value = "id") Integer memberId) {
-    	Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new ResourceNotFoundException("room", "id", memberId));
+    @RequestMapping(method = RequestMethod.DELETE, value = "/api/members/{id}")
+    public ResponseEntity<?> deleteroom(@PathVariable Integer id) {
+    	Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("member", "id", id));
 
         memberRepository.delete(member);
 

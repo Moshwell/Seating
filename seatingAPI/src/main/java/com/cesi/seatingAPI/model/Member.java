@@ -1,5 +1,6 @@
 package com.cesi.seatingAPI.model;
 
+import com.cesi.seatingAPI.repository.MemberRepository;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Personnes")
+//formatter:off
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"},
         allowGetters = true)
@@ -19,13 +21,13 @@ import java.util.Date;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer ID;
 
     @NotBlank
-    private String name;
+    private String Nom;
 
     @NotBlank
-    private String surname;
+    private String Prenom;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -38,27 +40,27 @@ public class Member {
     private Date updatedAt;
 
     public Integer getId() {
-        return id;
+        return ID;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.ID = id;
     }
 
     public String getName() {
-        return name;
+        return Nom;
     }
 
-    public void setName(String roomName) {
-        this.name = roomName;
+    public void setName(String Nom) {
+        this.Nom = Nom;
     }
     
     public String getSurname() {
-        return surname;
+        return Prenom;
     }
 
-    public void setSurname(String roomName) {
-        this.surname = roomName;
+    public void setSurname(String Prenom) {
+        this.Prenom = Prenom;
     }
 
     public Date getCreatedAt() {

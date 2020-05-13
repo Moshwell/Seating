@@ -20,16 +20,16 @@ import java.util.Date;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer ID;
 
     @NotBlank
-    private String roomName;
+    private String NomSalle;
 
     @NotBlank
-    private Integer nbRows;
+    private Integer NbRows;
     
     @NotBlank
-    private Integer nbCols;
+    private Integer NbCols;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -42,35 +42,35 @@ public class Room {
     private Date updatedAt;
 
     public Integer getId() {
-        return id;
+        return ID;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.ID = id;
     }
 
     public String getRoomName() {
-        return roomName;
+        return NomSalle;
     }
 
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
+    public void setRoomName(String NomSalle) {
+        this.NomSalle = NomSalle;
     }
 
     public Integer getRows() {
-        return nbRows;
+        return NbRows;
     }
 
     public void setRows(Integer nbRows) {
-        this.nbRows = nbRows;
+        this.NbRows = nbRows;
     }
     
     public Integer getCols() {
-        return nbCols;
+        return NbCols;
     }
 
     public void setCols(Integer nbCols) {
-        this.nbCols = nbCols;
+        this.NbCols = nbCols;
     }
 
 
